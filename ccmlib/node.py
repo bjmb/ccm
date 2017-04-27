@@ -1728,7 +1728,7 @@ class Node(object):
             pidfile = self.get_path() + "/cassandra.pid"
             while (not os.path.isfile(pidfile)):
                 now = common.now_ms()
-                if (now - start > 15000):
+                if (now - start > 60000):
                     raise Exception('Timed out waiting for pid file.')
                 else:
                     time.sleep(.001)
@@ -1736,7 +1736,7 @@ class Node(object):
             start = common.now_ms()
             while (os.stat(pidfile).st_size == 0):
                 now = common.now_ms()
-                if (now - start > 10000):
+                if (now - start > 60000):
                     raise Exception('Timed out waiting for pid file to be filled.')
                 else:
                     time.sleep(.001)
@@ -1745,7 +1745,7 @@ class Node(object):
                 # Spin for 500ms waiting for .bat to write the dirty_pid file
                 while (not os.path.isfile(self.get_path() + "/dirty_pid.tmp")):
                     now = common.now_ms()
-                    if (now - start > 500):
+                    if (now - start > 5000):
                         raise Exception('Timed out waiting for dirty_pid file.')
                     else:
                         time.sleep(.001)
